@@ -6,24 +6,29 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:23:39 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/21 18:07:43 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:46:37 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 ///* p/ primeira ocorrencia de um char
-char *ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *str, int c)
 {
-    while (*s)
-    {
-        if (*s == (char)c)
-            return ((char *)s);
-        s++;
-    }
-    if ((char)c == '\0')
-        return ((char *)s);
-    return (NULL);
+	int		i;
+	char	cc;
+
+	cc = (char)c;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == cc)
+			return ((char *)&str[i]);
+		i++;
+	}
+	if (str[i] == '\0' && cc == '\0')
+		return ((char *)&str[i]);
+	return (NULL);
 }
 
 // int	main(void)

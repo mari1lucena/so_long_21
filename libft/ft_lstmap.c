@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlucena- <mlucena-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 19:48:07 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/04/21 18:08:39 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:39:53 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 // 	t2.content = ft_strdup("ob");
 // 	t3.content = ft_strdup("oc");
 // 	hd = ft_lstmap(&t1, &ft_toupperr, free);
-// 	printf(" %s\n %s\n %s\n", (char *)hd->content, (char *)hd->next->content, \
+// 	printf(" %s\n %s\n %s\n", (char *)hd->content, 
+//(char *)hd->next->content, \
 // 	(char *)hd->next->next->content);
 // }

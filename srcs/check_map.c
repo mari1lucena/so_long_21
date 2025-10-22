@@ -6,7 +6,7 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 21:35:28 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/21 21:44:39 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 16:56:40 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_rectangular(t_game *game)
 {
-	int	y;
+	int		y;
 	size_t	first_line_len;
 
 	if (game->height == 0 || game->width == 0)
@@ -30,59 +30,55 @@ int	check_rectangular(t_game *game)
 	return (1);
 }
 
-int check_valid_chars(t_game *game)
+int	check_valid_chars(t_game *game)
 {
-    int y;
-    int x;
-    char c;
+	int		y;
+	int		x;
+	char	c;
 
-    y = 0;
-    while (y < game->height)
-    {
-        x = 0;
-        while(x < game->width)
-        {
-            c = game->map[y][x];
-            if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P')
-                return (0);
-            x++;
-        }
-        y++;
-    }
-    return (1);
+	y = 0;
+	while (y < game->height)
+	{
+		x = 0;
+		while (x < game->width)
+		{
+			c = game->map[y][x];
+			if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P')
+				return (0);
+			x++;
+		}
+		y++;
+	}
+	return (1);
 }
 
-int check_walls(t_game *game)
+int	check_walls(t_game *game)
 {
-    int y;
+	int	y;
 
-    // Primeira e última linha (topo e fundo)
-    y = 0;
-    while (y < game->width)
-    {
-        if (game->map[0][y] != '1' || game->map[game->height - 1][y] != '1')
-            return (0);
-        y++;
-    }
-
-    // Primeira e última coluna (laterais)
-    y = 0;
-    while (y < game->height)
-    {
-        if (game->map[y][0] != '1' || game->map[y][game->width - 1] != '1')
-            return (0);
-        y++;
-    }
-
-    return (1);
+	y = 0;
+	while (y < game->width)
+	{
+		if (game->map[0][y] != '1' || game->map[game->height - 1][y] != '1')
+			return (0);
+		y++;
+	}
+	y = 0;
+	while (y < game->height)
+	{
+		if (game->map[y][0] != '1' || game->map[y][game->width - 1] != '1')
+			return (0);
+		y++;
+	}
+	return (1);
 }
 
-int check_contents(t_game *game)
+int	check_contents(t_game *game)
 {
-    int y;
-    int x;
-    int count_p;
-    int count_e;
+	int y;
+	int x;
+	int count_p;
+	int count_e;
     int count_c;
 
     y = -1;

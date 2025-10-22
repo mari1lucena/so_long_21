@@ -6,7 +6,7 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:36:52 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/21 21:41:13 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:56:49 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int main(int argc, char *argv[])
 	ft_memset(&vars, 0, sizeof(t_vars));
 	if (argc != 2)
 		return (printf("Uso: %s <mapa.ber>\n", argv[0]), 1);
+	if (!validate_map_file(argv[1]))
+		return (1);
 	if (!init_game(&vars, argv[1]))
 		return (1);
     vars.game.moves = 0; 

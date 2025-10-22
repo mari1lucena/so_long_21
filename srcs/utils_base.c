@@ -6,7 +6,7 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:49:28 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/21 21:44:35 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 16:59:54 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int validate_map(t_game *game)
 {
     
     if(!check_valid_chars(game))
-        return (printf("Erro: caracter inválido no mapa.\n"), 0);
+        return (ft_printf("Erro: caracter inválido no mapa.\n"), 0);
     if (!check_rectangular(game))
-        return (printf("Erro: mapa não é retangular.\n"), 0);
+        return (ft_printf("Erro: mapa não é retangular.\n"), 0);
     if (!check_walls(game))
-        return (printf("Erro: mapa não está cercado por paredes.\n"), 0);
+        return (ft_printf("Erro: mapa não está cercado por paredes.\n"), 0);
     if (!check_contents(game))
-        return (printf("Erro: mapa deve ter 1 P, 1 E e pelo menos 1 C.\n"), 0);
+        return (ft_printf("Erro: mapa deve ter 1 P, 1 E e pelo menos 1 C.\n"), 0);
       if (!check_valid_path(game))
-        return (printf("Erro: não há caminho válido no mapa.\n"), 0);
+        return (ft_printf("Erro: não há caminho válido no mapa.\n"), 0);
     return (1);
 }
 
@@ -34,12 +34,12 @@ int	handle_exit(t_vars *vars, char tile)
 	{
 		if (vars->game.collected == vars->game.collectibles)
 		{
-			printf("🎉 Você venceu com %d movimentos!\n", vars->game.moves);
+			ft_printf("🎉 Você venceu com %d movimentos!\n", vars->game.moves);
 			exit_game(vars);
 		}
 		else
 		{
-			printf("🚫 Ainda faltam %d coletáveis!\n", 
+			ft_printf("🚫 Ainda faltam %d coletáveis!\n", 
 				vars->game.collectibles - vars->game.collected);
 			return (1);
 		}
@@ -62,11 +62,11 @@ void	handle_move(t_vars *vars, int new_x, int new_y)
 	}
     if (tile == 'E' && vars->game.collected == vars->game.collectibles)
     {
-        printf("Voce venceu com %d movimentos!\n", vars->game.moves);
+        ft_printf("Voce venceu com %d movimentos!\n", vars->game.moves);
         exit_game(vars);
     }
 	vars->game.moves++;
-	printf("Movimentos: %d\n", vars->game.moves);
+	ft_printf("Movimentos: %d\n", vars->game.moves);
 	vars->player_x = new_x;
 	vars->player_y = new_y;
 }

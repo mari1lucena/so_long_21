@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlucena- <mlucena-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:43:01 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/06/20 15:42:33 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:33:59 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int ft_strlen(char  *str)
+int	ft_strlen(char *str)
 {
-	int x;
+	int	x;
 
 	if (!str)
 		return (0);
 	x = 0;
-	while(*str && *str != '\n')
+	while (*str && *str != '\n')
 	{
 		x++;
 		str++;
@@ -29,7 +29,7 @@ int ft_strlen(char  *str)
 		x++;
 		str++;
 	}
-	return(x);
+	return (x);
 }
 
 int	gnl_strlen(char *str)

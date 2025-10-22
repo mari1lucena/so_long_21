@@ -6,7 +6,7 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:52:05 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/21 21:39:29 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 16:57:21 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "../minilibx-linux/mlx_int.h"
 # include "../minilibx-linux/mlx.h"
 # include "../get_next_line/get_next_line.h"
+# include "../printf/ft_printf.h"
 
 # define WINDOW_WIDTH 900
 # define WINDOW_HEIGHT 900
@@ -101,5 +102,11 @@ int     key_hook(int keycode, t_vars *vars);
 int	    find_player_position(t_game *game, int *x, int *y);
 int     count_collectibles(t_game *game);
 void    find_the_player(t_vars *vars);
+
+//check_fd
+int	check_file_validity(char *filename);
+int	validate_map_file(char *filename);
+int	check_file_extension(char *filename, char *extension);
+int	error_message(char *message);
 
 #endif
