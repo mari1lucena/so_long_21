@@ -6,110 +6,119 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:42:17 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/21 21:28:31 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 18:58:31 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// Função para criar uma cópia do mapa (para não modificar o original)
-char	**copy_map(t_game *game)
+char	**map_add_line(char **map, char *line, int *count)
 {
-	char	**copy;
-	int		y;
+	char	**tmp;
+	int		i;
 
-	copy = malloc(sizeof(char *) * (game->height + 1));
-	if (!copy)
+	tmp = malloc(sizeof(char *) * (*count + 2));
+	if (!tmp)
 		return (NULL);
-	y = 0;
-	while (y < game->height)
+	i = 0;
+	while (i < *count)
 	{
-		copy[y] = ft_strdup(game->map[y]);
-		if (!copy[y])
-		{
-			while (--y >= 0)
-				free(copy[y]);
-			free(copy);
-			return (NULL);
-		}
-		y++;
+		tmp[i] = map[i];
+		i++;
 	}
-	copy[y] = NULL;
-	return (copy);
+	tmp[*count] = ft_strtrim(line, "\n");
+	tmp[*count + 1] = NULL;
+	(*count)++;
+	free(line);
+	free(map);
+	return (tmp);
 }
 
-char    **map_add_line(char **map, char *line, int *count)
-{
-    char **tmp;
-    int     i;
-
-    tmp = malloc(sizeof(char *) * (*count + 2));
-    if (!tmp)
-        return (NULL);
-    
-    i = 0;
-    while( i < *count)
-    {
-        tmp[i] = map[i];
-        i++;
-    }
-    tmp[*count] = ft_strtrim(line, "\n");
-    tmp[*count + 1] = NULL;
-    (*count)++;
-    free(line);
-    free(map);
-    return (tmp);
-}
-
-char	**read_map(const char *filename, int *height, int *width)
+char	**read_map(const char *f, int *h, int *w)
 {
 	int		fd;
-	char	*line;
-	char	**map;
-	int		count;
+	char	*l;
+	char	**m;
+	int		c;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0 || !(line = get_next_line(fd)))
+	fd = open(f, O_RDONLY);
+	if (fd < 0)
 		return (NULL);
-	*width = ft_strlen(line) - 1;
-	map = malloc(sizeof(char *) * 2);
-	if (!map)
-		return (free(line), NULL);
-	count = 0;
-	map[count++] = ft_strtrim(line, "\n");
-	map[count] = NULL;
-	free(line);
-	while ((line = get_next_line(fd)))
-		map = map_add_line(map, line, &count);
+	l = get_next_line(fd);
+	if (!l)
+		return (NULL);
+	*w = ft_strlen(l) - 1;
+	m = malloc(sizeof(char *) * 2);
+	if (!m)
+		return (free(l), NULL);
+	c = 0;
+	m[c++] = ft_strtrim(l, "\n");
+	m[c] = NULL;
+	free(l);
+	m = read_map_rest(fd, m, &c);
 	close(fd);
-	*height = count;
+	*h = c;
+	return (m);
+}
+
+char	**read_map_rest(int fd, char **map, int *count)
+{
+	char	*l;
+
+	l = get_next_line(fd);
+	while (l)
+	{
+		map = map_add_line(map, l, count);
+		l = get_next_line(fd);
+	}
 	return (map);
 }
 
-
-void    paint_map(char **arr, t_vars *vars)
+void	paint_map(char **arr, t_vars *vars)
 {
-    int x;
-    int y;
-    
-    y = 0;
-    while(y < vars->game.height)
-    {
-        x = 0;
-        while(x < vars->game.width)
-        {
-            if(arr[y][x] == '1')
-                mlx_put_image_to_window(vars->mlx, vars->win, vars->rock, x*TILE, y*TILE);
-            else if(arr[y][x] == '0')
-                mlx_put_image_to_window(vars->mlx, vars->win, vars->waves, x*TILE, y*TILE);
-            else if(arr[y][x] == 'C')
-                mlx_put_image_to_window(vars->mlx, vars->win, vars->heart, x*TILE, y*TILE);
-            else if(arr[y][x] == 'E')
-                    mlx_put_image_to_window(vars->mlx, vars->win, vars->exit, x*TILE, y*TILE);
-            x++;
-        }
-        y++;
-    }
-    mlx_put_image_to_window(vars->mlx, vars->win,  vars->player_image, 
-                            vars->player_x*TILE, vars->player_y*TILE);   
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < vars->game.height)
+	{
+		x = 0;
+		while (x < vars->game.width)
+		{
+			if (arr[y][x] == '1')
+				mlx_put_image_to_window(vars->mlx, vars->win,
+					vars->rock, x * 64, y * 64);
+			else if (arr[y][x] == '0')
+				mlx_put_image_to_window(vars->mlx, vars->win,
+					vars->waves, x * 64, y * 64);
+			else if (arr[y][x] == 'C')
+				mlx_put_image_to_window(vars->mlx, vars->win,
+					vars->heart, x * 64, y * 64);
+			x++;
+		}
+		y++;
+	}
+	draw_map2(arr, vars);
+}
+
+void	draw_map2(char **arr, t_vars *vars)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < vars->game.height)
+	{
+		x = 0;
+		while (x < vars->game.width)
+		{
+			if (arr[y][x] == 'E')
+				mlx_put_image_to_window(vars->mlx, vars->win,
+					vars->exit, x * 64, y * 64);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_image,
+		vars->player_x * TILE, vars->player_y * TILE);
 }

@@ -6,7 +6,7 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:46:54 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/22 16:57:30 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 18:23:04 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,49 +36,70 @@ int	find_player_position(t_game *game, int *x, int *y)
 	return (0);
 }
 
-int count_collectibles(t_game *game)
+int	count_collectibles(t_game *game)
 {
-    int count;
-    int y;
-    int x;
+	int	count;
+	int	y;
+	int	x;
 
-    count = 0;
-    y = 0;
-    while(y < game->height)
-    {
-        x = 0;
-        while(x < game->width)
-        {
-            if(game->map[y][x] == 'C')
-                count++;
-            x++;
-        }
-        y++;
-    }
-    return (count);
+	count = 0;
+	y = 0;
+	while (y < game->height)
+	{
+		x = 0;
+		while (x < game->width)
+		{
+			if (game->map[y][x] == 'C')
+				count++;
+			x++;
+		}
+		y++;
+	}
+	return (count);
 }
 
-void    find_the_player(t_vars *vars)
+void	find_the_player(t_vars *vars)
 {
-    int y;
-    int x;
+	int	y;
+	int	x;
 
-    y = 0;
-    while(y < vars->game.height)
-    {
-        x = 0;
-        while(x < vars->game.width)
-        {
-            if(vars->game.map[y][x] == 'P')
-            {
-                vars->player_x = x;
-                vars->player_y = y;
-                vars->game.map[y][x] = '0';
-                return;
-            }
-            x++;
-        }
-        y++;
-     }
+	y = 0;
+	while (y < vars->game.height)
+	{
+		x = 0;
+		while (x < vars->game.width)
+		{
+			if (vars->game.map[y][x] == 'P')
+			{
+				vars->player_x = x;
+				vars->player_y = y;
+				vars->game.map[y][x] = '0';
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
 }
 
+void	check_file(const char *filename)
+{
+	int		fd;
+	char	buffer[1];
+	ssize_t	bytes_read;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		write(2, "Error\nArquivo não encontrado\n", 30);
+		exit(EXIT_FAILURE);
+	}
+	bytes_read = read(fd, buffer, 1);
+	if (bytes_read == 0)
+	{
+		close(fd);
+		write(2, "Error\nArquivo vazio\n", 21);
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+}

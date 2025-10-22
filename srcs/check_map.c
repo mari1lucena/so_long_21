@@ -6,7 +6,7 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 21:35:28 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/22 16:56:40 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 18:48:39 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,30 +75,30 @@ int	check_walls(t_game *game)
 
 int	check_contents(t_game *game)
 {
-	int y;
-	int x;
-	int count_p;
-	int count_e;
-    int count_c;
+	int	y;
+	int	x;
+	int	count_p;
+	int	count_e;
+	int	count_c;
 
-    y = -1;
-    count_p = 0;
-    count_e = 0;
-    count_c = 0;
-    while(++y < game->height)
-    {
-        x = -1;
-        while(++x < game->width)
-        {
-            if(game->map[y][x] == 'P')
-                count_p++;
-            else if(game->map[y][x] == 'E')
-                count_e++;
-            else if(game->map[y][x] == 'C')
-                count_c++;
-        }
-    }
-   return (count_p == 1 && count_e == 1 && count_c >= 1);
+	y = -1;
+	count_p = 0;
+	count_e = 0;
+	count_c = 0;
+	while (++y < game->height)
+	{
+		x = -1;
+		while (++x < game->width)
+		{
+			if (game->map[y][x] == 'P')
+				count_p++;
+			else if (game->map[y][x] == 'E')
+				count_e++;
+			else if (game->map[y][x] == 'C')
+				count_c++;
+		}
+	}
+	return (count_p == 1 && count_e == 1 && count_c >= 1);
 }
 
 int	check_valid_path(t_game *game)
@@ -107,14 +107,17 @@ int	check_valid_path(t_game *game)
 	int		start_x;
 	int		start_y;
 	int		result;
+	t_size	size;
 
 	if (!find_player_position(game, &start_x, &start_y))
 		return (0);
 	map_copy = copy_map(game);
 	if (!map_copy)
 		return (0);
-	flood_fill(map_copy, start_x, start_y, game->width, game->height);
-	result = check_flood_result(map_copy, game->width, game->height);
+	size.width = game->width;
+	size.height = game->height;
+	flood_fill(map_copy, start_x, start_y, size);
+	result = check_flood_result(map_copy, size);
 	free_map(map_copy);
 	return (result);
 }

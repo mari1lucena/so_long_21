@@ -6,7 +6,7 @@
 /*   By: mlucena- <mlucena-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:36:52 by mlucena-          #+#    #+#             */
-/*   Updated: 2025/10/22 14:56:49 by mlucena-         ###   ########.fr       */
+/*   Updated: 2025/10/22 18:33:55 by mlucena-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	init_mlx(t_vars *vars)
 	vars->mlx = mlx_init();
 	if (!vars->mlx)
 		return (free_map(vars->game.map), 0);
-	vars->win = mlx_new_window(vars->mlx, vars->game.width * TILE, 
-		vars->game.height * TILE, "JESUS LOVES YOU!");
+	vars->win = mlx_new_window(vars->mlx, vars->game.width * TILE,
+			vars->game.height * TILE, "JESUS LOVES YOU!");
 	if (!vars->win)
 		return (cleanup(vars), 0);
 	return (1);
@@ -39,12 +39,18 @@ int	load_textures(t_vars *vars)
 	int	width;
 	int	height;
 
-	vars->player_image = mlx_xpm_file_to_image(vars->mlx, "sprites/jesus.xpm", &width, &height);
-	vars->rock = mlx_xpm_file_to_image(vars->mlx, "sprites/rock.xpm", &width, &height);
-	vars->heart = mlx_xpm_file_to_image(vars->mlx, "sprites/coracao.xpm", &width, &height);
-	vars->waves = mlx_xpm_file_to_image(vars->mlx, "sprites/waves.xpm", &width, &height);
-	vars->exit = mlx_xpm_file_to_image(vars->mlx, "sprites/exit.xpm", &width, &height);
-	if (!vars->player_image || !vars->rock || !vars->heart || !vars->waves || !vars->exit)
+	vars->player_image = mlx_xpm_file_to_image(vars->mlx, "sprites/jesus.xpm",
+			&width, &height);
+	vars->rock = mlx_xpm_file_to_image(vars->mlx, "sprites/rock.xpm",
+			&width, &height);
+	vars->heart = mlx_xpm_file_to_image(vars->mlx, "sprites/coracao.xpm",
+			&width, &height);
+	vars->waves = mlx_xpm_file_to_image(vars->mlx, "sprites/waves.xpm",
+			&width, &height);
+	vars->exit = mlx_xpm_file_to_image(vars->mlx, "sprites/exit.xpm",
+			&width, &height);
+	if (!vars->player_image || !vars->rock || !vars->heart || !vars->waves
+		|| !vars->exit)
 		return (0);
 	return (1);
 }
@@ -56,7 +62,7 @@ void	start_game(t_vars *vars)
 	paint_map(vars->game.map, vars);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_vars	vars;
 
@@ -67,7 +73,7 @@ int main(int argc, char *argv[])
 		return (1);
 	if (!init_game(&vars, argv[1]))
 		return (1);
-    vars.game.moves = 0; 
+	vars.game.moves = 0;
 	if (!init_mlx(&vars))
 		return (cleanup(&vars), 1);
 	if (!load_textures(&vars))
